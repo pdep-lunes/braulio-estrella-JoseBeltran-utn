@@ -1,28 +1,28 @@
-module Lib () where
+module Lib (bolaEspinosa, Personaje(UnPersonaje)) where
 
 import Text.Show.Functions ()
 
-data Personaje = unPersonaje {
+data Personaje = UnPersonaje {
     nombre :: String,
     poderBasico :: String,
     superPoder :: String,
     superPoderActivo :: Bool,
     cantidadVida :: Int,
     estado :: String
-}
+} deriving (Show)
 
-doble :: Int -> Int
-doble x = x * 2
-
-bolaEspinosa :: Personaje -> Int
+bolaEspinosa :: Personaje -> Personaje
 bolaEspinosa unPersonaje 
-    | resultadoVidaNegativa unPersonaje = 0
-    | otherwise = cantidadVida unPersonaje - 1000
+    | cantidadVida unPersonaje <= 1000 = unPersonaje {cantidadVida = 0}
+    | otherwise = restoMilVida unPersonaje
 
--- resultadoVidaNegativa: cantidadVida unPersonaje <= 1000
+restoMilVida :: Personaje -> Personaje
+restoMilVida unPersonaje = unPersonaje {cantidadVida = cantidadVida unPersonaje - 1000} 
 
-lluviaDeTuercas :: Personaje -> Int
-lluviaDeTuercas unPersonaje
-    | esColega unPersonaje = cantidadVida unPersonaje + 800
-    | esContrincante unPersonaje = cantidadVida unPersonaje `div` 2
-    | otherwise = cantidadVida unPersonaje
+--lluviaDeTuercas :: Personaje -> Personaje
+--lluviaDeTuercas unPersonaje
+--   | esColega unPersonaje = unPersonaje {cantidadVida + 800}
+--   | esContrincante unPersonaje = cantidadVida unPersonaje `div` 2
+--   | otherwise = cantidadVida unPersonaje 
+
+
